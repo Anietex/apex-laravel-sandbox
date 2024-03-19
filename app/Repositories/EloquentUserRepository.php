@@ -37,4 +37,9 @@ class EloquentUserRepository implements Contracts\UserRepository
     {
         return User::where('email', $email)->first();
     }
+
+    public function users(): array
+    {
+        return User::query()->paginate(10)->toArray();
+    }
 }

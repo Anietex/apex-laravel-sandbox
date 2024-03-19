@@ -20,10 +20,10 @@ class AuthService
      * Register a new user
      *
      * @param array $data
-     * @return User
+     * @return array
      */
 
-    public function register(array $data): User
+    public function register(array $data): array
     {
 
         $userData = [
@@ -35,8 +35,11 @@ class AuthService
 
         $user =  $this->userRepository->create($userData);
         $token = $user->createToken('auth_token')->plainTextToken;
-        return $user->setAttribute('token', $token);
 
+        return [
+            'user' => $user,
+            'token' => $token
+        ];
 
     }
 
@@ -44,11 +47,11 @@ class AuthService
      * Login a user
      *
      * @param array $data
-     * @return User
+     * @return array
      * @throws \Exception
      */
 
-    public function login(array $data): User
+    public function login(array $data): array
     {
         $user = $this->userRepository->findByEmail($data['email']);
 
@@ -56,8 +59,12 @@ class AuthService
             throw new \Exception('Invalid credentials');
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->accessToken;
 
-        return $user->setAttribute('token', $token);
+        return [
+            'user' => $user,
+            'token' => $token
+        ];
+
     }
 }

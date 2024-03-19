@@ -9,6 +9,43 @@ class UserService
 {
 
 
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    public function users(): array
+    {
+        return $this->userRepository->users();
+    }
+
+    public function create(array $data): User
+    {
+        return $this->userRepository->create($data);
+    }
+
+    public function update(User $user, array $data): User
+    {
+        return $this->userRepository->update($user, $data);
+    }
+
+    public function delete(User $user): bool
+    {
+        return $this->userRepository->delete($user);
+    }
+
+    public function find(int $id): ?User
+    {
+        return $this->userRepository->find($id);
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        return $this->userRepository->findByEmail($email);
+    }
+
 
 
 
