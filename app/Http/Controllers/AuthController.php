@@ -39,4 +39,28 @@ class AuthController extends Controller
         }
 
     }
+
+
+    /**
+     * Register a new user
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function register(Request $request): JsonResponse
+    {
+        $data = $request->only('name', 'email', 'password');
+        try {
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required'
+            ]);
+
+            $user = $this->authService->register($data);
+            return ResponseHandler::success($user, 'User registered successfully');
+
+        } catch (\Exception $e) {
+            return ResponseHandler::error($e->getMessage(), 400);
+        }
+    }
 }

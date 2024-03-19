@@ -12,7 +12,9 @@ class EloquentUserRepository implements Contracts\UserRepository
     {
 
         $data['password'] = bcrypt($data['password']);
-        return User::create($data);
+        $user = User::create($data);
+
+        return $user->fresh();
     }
 
     public function update(User $user, array $data): User
