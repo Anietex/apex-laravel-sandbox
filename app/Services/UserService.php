@@ -16,13 +16,18 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
-    public function users(): array
+    public function getUsers(): array
     {
-        return $this->userRepository->users();
+        $user = auth()->user();
+        if ($user->role->slug === 'admin') {
+            return $this->userRepository->getAllUsers();
+        }
+        return $this->userRepository->getUserUsers($user->id);
     }
 
     public function create(array $data): User
     {
+        $data['creator_id'] = auth()->id();
         return $this->userRepository->create($data);
     }
 

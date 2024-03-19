@@ -7,7 +7,9 @@ use App\Models\User;
 interface UserRepository
 {
 
-    public function users(): array;
+    public function getAllUsers(): array;
+
+    public function getUserUsers($userId): array;
 
 
     public function create(array $data): User;
