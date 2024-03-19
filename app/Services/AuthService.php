@@ -34,7 +34,7 @@ class AuthService
         ];
 
         $user =  $this->userRepository->create($userData);
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->accessToken;
 
         return [
             'user' => $user,
