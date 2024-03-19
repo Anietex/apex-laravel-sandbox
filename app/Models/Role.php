@@ -15,6 +15,10 @@ class Role extends Model
         'slug'
     ];
 
+
+    public $timestamps = false;
+
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
