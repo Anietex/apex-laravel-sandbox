@@ -19,6 +19,10 @@ class EloquentUserRepository implements Contracts\UserRepository
 
     public function update(User $user, array $data): User
     {
+        if(isset($data['password'])){
+            $data['password'] = bcrypt($data['password']);
+        }
+
         $user->update($data);
         return $user->fresh();
     }

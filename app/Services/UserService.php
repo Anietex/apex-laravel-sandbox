@@ -3,17 +3,17 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\Contracts\RoleRepository;
 use App\Repositories\Contracts\UserRepository;
 
 class UserService
 {
 
 
-    private UserRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository, private readonly RoleRepository $roleRepository)
     {
-        $this->userRepository = $userRepository;
+
     }
 
     public function getUsers(): array
@@ -27,7 +27,10 @@ class UserService
 
     public function create(array $data): User
     {
+        $roleId = $this->roleRepository->getRoleId('user');
         $data['creator_id'] = auth()->id();
+        $data['role_id'] = $roleId;
+
         return $this->userRepository->create($data);
     }
 

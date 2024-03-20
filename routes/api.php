@@ -34,4 +34,6 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('users')->middleware('auth:api')->group(function () {
     Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::patch('/{user}', [UserController::class, 'update']);
 });
