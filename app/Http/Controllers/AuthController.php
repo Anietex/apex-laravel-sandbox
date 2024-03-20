@@ -31,7 +31,8 @@ class AuthController extends Controller
             return ResponseHandler::success($user, 'Login successful');
 
         } catch (\Exception $e) {
-            return ResponseHandler::error($e->getMessage(), 400);
+
+            return ResponseHandler::error($e->getMessage(), 401);
         }
 
     }
@@ -47,10 +48,24 @@ class AuthController extends Controller
         $data = $request->validated();
         try {
             $user = $this->authService->register($data);
-            return ResponseHandler::success($user, 'User registered successfully');
+            return ResponseHandler::success($user, 'User registered successfully',201);
 
         } catch (\Exception $e) {
             return ResponseHandler::error($e->getMessage(), 400);
         }
+    }
+
+
+    /**
+     * Logout a user
+     * @param Request $request
+     * @return JsonResponse
+     */
+
+    public function logout(Request $request): JsonResponse
+    {
+        $token = $request->user()->token();
+        $token->revoke();
+        return ResponseHandler::success(null, 'Successfully logged out');
     }
 }
