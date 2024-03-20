@@ -36,4 +36,6 @@ Route::prefix('users')->middleware('auth:api')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/', [UserController::class, 'store']);
     Route::patch('/{user}', [UserController::class, 'update']);
+    Route::delete('/{user}', [UserController::class, 'destroy']);
+    Route::get('/{user}', [UserController::class, 'show']);
 });
