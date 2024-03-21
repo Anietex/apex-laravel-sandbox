@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\ClientRepository;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Throwable;
 
@@ -158,12 +157,7 @@ class AuthTest extends TestCase
     public function user_can_logout_successfully()
     {
         // Create a user
-        $user = User::factory()->create([
-            'email' => 'user@example.com',
-            'name' => 'Test User',
-            'role_id' => 2, // 'user'
-            'password' => bcrypt('password123'),
-        ]);
+        $user = User::factory()->create();
 
         $token = $user->createToken('TestToken')->accessToken;
 

@@ -44,7 +44,7 @@ class UserController extends Controller
             $userData = collect($request->validated())->filter(fn($value) => $value !== null && $value !== '')->toArray();
 
             $user = $this->userService->create($userData);
-            return ResponseHandler::success($user, 'User created successfully');
+            return ResponseHandler::success($user, 'User created successfully',201);
         }catch (\Exception $exception) {
             return ResponseHandler::error('An error occurred while creating user', 500);
         }
